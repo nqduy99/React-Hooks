@@ -1,77 +1,37 @@
 import {useEffect, useState} from 'react'
 
-const tabs =['posts', 'comments', 'albums']
 
 function Content() {
-    const [title, setTitle] = useState('Hi')
-    const [posts, setPosts] = useState([])
-    const [type, setType] =useState('posts')
-    const [showGoToTop, setShowGoToTop] = useState(false)
-  //const useEffect(callback, [deps])
-    useEffect(() => {
+    const [avatar, setAvatar] = useState()
 
-        fetch(`https://jsonplaceholder.typicode.com/${type}`)
-        .then(res => res.json())
-        .then(posts => {
-            setPosts(posts);
-        })
-    }, [type])
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if(window.scrollY >= 200){
-                setShowGoToTop(true)
-            }else{
-                setShowGoToTop(false)
-            }
-        } 
-
-        window.addEventListener('scroll', handleScroll)
-
-        //Cleanup Function
+    useEffect(()=> {
+        //Clean up function
         return () => {
-            window.removeEventListener('scroll', handleScroll)
+            avatar && URL.revokeObjectURL(avatar.preview)
         }
-    }, []) 
+    }, [avatar])
 
+    const handlePreviewAvatar = (e) => {
+        const file = e.target.files[0]
+
+        file.preview = URL.createObjectURL(file)
+
+        setAvatar(file)
+    }
     return (
         <div>
-            {tabs.map((tab) => {
-                return <button 
-                    onClick={() => setType(tab)}
-                    key={tab}
-                    style={type === tab ? {
-                        color: '#fff',
-                        backgroundColor: '#333'
-                    } : {
-                        color: '#333'
-                    }}
-                >{tab}</button>
-            })}
-            <input 
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-        />
-        <ul>
-            {posts.map((post) => {
-            return <li key={post.id}>{post.title || post.name}</li>
-            })}
-        </ul>
+            <input
+                type="file"
+                onChange={handlePreviewAvatar}
+            />
 
-        {showGoToTop &&
-            <button
-                style={{
-                    position: 'fixed',
-                    right: 20, 
-                    bottom: 20
-                }}
-            >Go to Top</button>
-        
-        }
-
+            {avatar && (
+                <img src={avatar.preview} alt="" width="80%" />
+            )}
         </div>
     )
         
 }
+
 
 export default Content;
