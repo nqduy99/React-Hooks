@@ -1,40 +1,15 @@
+import { memo } from 'react';
 import {useEffect, useLayoutEffect, useState} from 'react'
 
-const lessons = [
-    {
-        id: 1,
-        name: 'React la gi? Tai sao nen hoc ReactJS?'
-    },
-    {
-        id: 2,
-        name: 'SPA/ MPA la gi'
-    },
-    {
-        id: 3,
-        name: 'Arrow'
-    }
-]
-
-function Content() {
-    const [count , setCount] = useState(1)
-
-    useEffect(()=>{
-        if(count > 3)
-            setCount(0)
-
-    }, [count])
-    
-    const handleClick = () => {
-        setCount(count + 1)
-    }
+function Content( {count, onIncrease} ) {
+    console.log('Re-render')    
 
     return (
-        <div>
-            <h1>{count}</h1>
-            <button onClick={handleClick}>Run</button>
-        </div>
+        <>
+            <h1>Hello Anh Em</h1>
+            <button onClick={onIncrease}>Click me!</button>
+        </>
     )     
 }
 
-
-export default Content;
+export default memo(Content);
