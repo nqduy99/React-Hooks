@@ -1,36 +1,39 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useLayoutEffect, useState} from 'react'
 
+const lessons = [
+    {
+        id: 1,
+        name: 'React la gi? Tai sao nen hoc ReactJS?'
+    },
+    {
+        id: 2,
+        name: 'SPA/ MPA la gi'
+    },
+    {
+        id: 3,
+        name: 'Arrow'
+    }
+]
 
 function Content() {
-    const [avatar, setAvatar] = useState()
+    const [count , setCount] = useState(1)
 
-    useEffect(()=> {
-        //Clean up function
-        return () => {
-            avatar && URL.revokeObjectURL(avatar.preview)
-        }
-    }, [avatar])
+    useEffect(()=>{
+        if(count > 3)
+            setCount(0)
 
-    const handlePreviewAvatar = (e) => {
-        const file = e.target.files[0]
-
-        file.preview = URL.createObjectURL(file)
-
-        setAvatar(file)
+    }, [count])
+    
+    const handleClick = () => {
+        setCount(count + 1)
     }
+
     return (
         <div>
-            <input
-                type="file"
-                onChange={handlePreviewAvatar}
-            />
-
-            {avatar && (
-                <img src={avatar.preview} alt="" width="80%" />
-            )}
+            <h1>{count}</h1>
+            <button onClick={handleClick}>Run</button>
         </div>
-    )
-        
+    )     
 }
 
 
