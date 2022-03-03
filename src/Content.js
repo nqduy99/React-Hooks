@@ -1,5 +1,7 @@
 import { memo } from 'react';
-import {useEffect, useLayoutEffect, useState} from 'react'
+
+// Context
+// ComA => ComB => ComC
 
 function Content( {count, onIncrease} ) {
     console.log('Re-render')    
