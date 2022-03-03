@@ -1,16 +1,13 @@
 import { memo } from 'react';
+import Paragraph from './Paragraph';
 
-// Context
-// ComA => ComB => ComC
 
-function Content( {count, onIncrease} ) {
-    console.log('Re-render')    
+function Content( {theme} ) {   
 
     return (
-        <>
-            <h1>Hello Anh Em</h1>
-            <button onClick={onIncrease}>Click me!</button>
-        </>
+        <div>
+            <Paragraph />
+        </div>
     )     
 }
 
